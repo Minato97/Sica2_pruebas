@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="cct">
+    <file>footer.png</file>
+    <file>biometrics.jpg</file>
+    <file>next.png</file>
+    <file>Update.png</file>
+    <file>usuarios.png</file>
+    <file>Update2.png</file>
+    <file>Clock.png</file>
+    <file>configuraciones.png</file>
+    <file>error.jpg</file>
+    <file>udg logo blanco png.png</file>
+  </qresource>
+</RCC>
