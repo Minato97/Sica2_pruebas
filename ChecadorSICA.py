@@ -2,7 +2,9 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 import sys, urllib.request, json, time
-from PyQt5.QtCore import QTimer, QTime, Qt
+from PyQt5.QtCore import QTimer, QTime, QDate, QDateTime, Qt
+
+timer = QTimer()
 
 
 class principal(QMainWindow):
@@ -21,16 +23,19 @@ class principal(QMainWindow):
         index.Number_0.clicked.connect(self.IngresoNumeros_0)
         index.borrar.clicked.connect(self.borrar_ID)
         index.Aceptar.clicked.connect(self.Login)
-        timer = QTimer(self)
-        timer.timeout.connect(self.displayTime)
-        timer.start(1000)
 
+
+        global timer
+        timer.timeout.connect(self.displayTime)
+        timer.start()
         index.show()
 
 
     def displayTime(self):
-        currentTime = QTime.currentTime()
-        displayText = currentTime.toString('hh:mm:ss')
+        currentTime = QDateTime.currentDateTime()
+        displayText = currentTime.toString(Qt.DefaultLocaleLongDate)
+        displayText = displayText.capitalize()
+        self.reloj.setAlignment(Qt.AlignCenter)
         self.reloj.setText(displayText)
 
     def IngresoNumeros_1(self):
@@ -90,28 +95,34 @@ class principal(QMainWindow):
         self.ID.setStyleSheet("QLineEdit {border: None; font: 18pt; border-radius: 5px;}")
 
     def Login(self):
-        # entrar = uic.loadUi(r"C:\Users\Nacho Andrade\Documents\Nuevo SICA\SICA_2_pruebas\Frame_login.ui", self)
+        global timer
         codigoBuscado = self.ID.text()
         codigoBuscado= int(codigoBuscado)
+
         print(codigoBuscado)
         print(type(codigoBuscado))
+
         url = "http://148.202.89.12:90/api/user"
         response = urllib.request.urlopen(url)
         data = json.loads(response.read())
         for d in data:
             if d['id'] == codigoBuscado:
+
                 print(d['id'])
                 print(type(d['id']))
+
                 entrar = uic.loadUi(r"C:\Users\Nacho Andrade\Documents\Nuevo SICA\SICA_2_pruebas\Frame_login.ui", self)
                 nombre = (d['name'])
                 entrar.nombres.setText(nombre)
                 entrar.show()
+                timer.stop()
+
+
             else:
                 self.ID.setStyleSheet("QLineEdit {border: 2px solid red; font: 18pt; border-radius: 5px;}")
                 self.mensaje.setStyleSheet("color: red; font-size:16pt; ")
                 self.mensaje.setText("Código no encontrado")
-        #if DB.database.select_user(codigoBuscado) == True:
-            #entrar = uic.loadUi(r"proy pytohn\Py con interfaz\ventana2login.ui", self)
+
 
     
 app = QApplication(sys.argv)
