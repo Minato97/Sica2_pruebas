@@ -12,15 +12,25 @@ class principal(QMainWindow):
         super(principal, self).__init__()
         index = uic.loadUi(r"C:\Users\Nacho Andrade\Documents\Nuevo SICA\SICA_2_pruebas\login.ui", self)
         index.Number_1.clicked.connect(self.IngresoNumeros_1)
+        index.Number_1.clicked.connect(self.iniciar_barra)
         index.Number_2.clicked.connect(self.IngresoNumeros_2)
+        index.Number_2.clicked.connect(self.iniciar_barra)
         index.Number_3.clicked.connect(self.IngresoNumeros_3)
+        index.Number_3.clicked.connect(self.iniciar_barra)
         index.Number_4.clicked.connect(self.IngresoNumeros_4)
+        index.Number_4.clicked.connect(self.iniciar_barra)
         index.Number_5.clicked.connect(self.IngresoNumeros_5)
+        index.Number_5.clicked.connect(self.iniciar_barra)
         index.Number_6.clicked.connect(self.IngresoNumeros_6)
+        index.Number_6.clicked.connect(self.iniciar_barra)
         index.Number_7.clicked.connect(self.IngresoNumeros_7)
+        index.Number_7.clicked.connect(self.iniciar_barra)
         index.Number_8.clicked.connect(self.IngresoNumeros_8)
+        index.Number_8.clicked.connect(self.iniciar_barra)
         index.Number_9.clicked.connect(self.IngresoNumeros_9)
+        index.Number_9.clicked.connect(self.iniciar_barra)
         index.Number_0.clicked.connect(self.IngresoNumeros_0)
+        index.Number_0.clicked.connect(self.iniciar_barra)
         index.borrar.clicked.connect(self.borrar_ID)
         index.Aceptar.clicked.connect(self.Login)
 
@@ -89,11 +99,21 @@ class principal(QMainWindow):
         self.ID.setText(ingreso)
 
     def borrar_ID(self):
-        self.ID.setText("")
+        id= self.ID.text()
+        newId = id[:-1]
+        self.ID.setText(newId)
         self.mensaje.setAlignment(Qt.AlignCenter)
         self.mensaje.setStyleSheet("color: white; font-size:16pt; ")
-        self.mensaje.setText("Esperendo Código")
+        self.mensaje.setText("ESPERANDO CÓDIGO")
         self.ID.setStyleSheet("QLineEdit {border: None; font: 18pt; border-radius: 5px;}")
+
+    def iniciar_barra(self):
+        x = 0
+
+        while x < 100:
+            x += 0.000003
+            self.barra_progreso.setValue(x)
+
 
     def Login(self):
         global timer
@@ -121,11 +141,12 @@ class principal(QMainWindow):
             else:
                 self.ID.setStyleSheet("QLineEdit {border: 2px solid red; font: 18pt; border-radius: 5px;}")
                 self.mensaje.setAlignment(Qt.AlignCenter)
-                self.mensaje.setStyleSheet("color: red; font-size:16pt; ")
-                self.mensaje.setText("Código no encontrado")
+                self.mensaje.setStyleSheet("color: red; font-size:16pt")
+                self.mensaje.setText("¡CÓDIGO NO ENCONTRADO!")
 
 
-    
+
+
 app = QApplication(sys.argv)
 UIWindow = principal()
 app.exec_()
