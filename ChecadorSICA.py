@@ -90,6 +90,7 @@ class principal(QMainWindow):
 
     def borrar_ID(self):
         self.ID.setText("")
+        self.mensaje.setAlignment(Qt.AlignCenter)
         self.mensaje.setStyleSheet("color: white; font-size:16pt; ")
         self.mensaje.setText("Esperendo Código")
         self.ID.setStyleSheet("QLineEdit {border: None; font: 18pt; border-radius: 5px;}")
@@ -113,13 +114,13 @@ class principal(QMainWindow):
 
                 entrar = uic.loadUi(r"C:\Users\Nacho Andrade\Documents\Nuevo SICA\SICA_2_pruebas\Frame_login.ui", self)
                 nombre = (d['name'])
+                print(nombre)
                 entrar.nombres.setText(nombre)
                 entrar.show()
                 timer.stop()
-
-
             else:
                 self.ID.setStyleSheet("QLineEdit {border: 2px solid red; font: 18pt; border-radius: 5px;}")
+                self.mensaje.setAlignment(Qt.AlignCenter)
                 self.mensaje.setStyleSheet("color: red; font-size:16pt; ")
                 self.mensaje.setText("Código no encontrado")
 
