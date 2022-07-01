@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 import sys, urllib.request, json, time
 from PyQt5.QtCore import QTimer, QTime, QDate, QDateTime, Qt
+from PyQt5.QtMultimedia import *
+from PyQt5.QtMultimediaWidgets import *
 
 
 class principal(QMainWindow):
@@ -29,7 +31,58 @@ class principal(QMainWindow):
 
         self.timer_reloj.timeout.connect(lambda: self.displayTime(self.reloj))
         self.timer_reloj.start()
+
+        self.available_cameras = QCameraInfo.availableCameras()
+
+
+        frame = QFrame(self)
+        frame.setFrameShape(QFrame.Box)
+        frame.setFrameShadow(QFrame.Sunken)
+        frame.setFixedWidth(305)
+        frame.setFixedHeight(180)
+        frame.move(10, 10)
+
+        self.paginaVisor = QVideoWidget()
+        self.paginaVisor.resize(300, 175)
+
+        self.visor = QCameraViewfinder(self.paginaVisor)
+        self.visor.resize(300, 175)
+        #
+        # self.labelFoto = QLabel()
+        # self.labelFoto.setAlignment(Qt.AlignCenter)
+        # self.labelFoto.resize(300, 175)
+
+        # QStackedWidget
+        self.stackedWidget = QStackedWidget(frame)
+        self.stackedWidget.addWidget(self.paginaVisor)
+        # self.stackedWidget.addWidget(self.labelFoto)
+        self.stackedWidget.resize(300, 175)
+        self.stackedWidget.move(2, 2)
+        self.select_camera(0)
+
         index.show()
+
+    def select_camera(self, i):
+
+        # getting the selected camera
+        self.camera = QCamera(self.available_cameras[i])
+
+        # setting view finder to the camera
+        self.camera.setViewfinder(self.visor)
+
+        # setting capture mode to the camera
+        self.camera.setCaptureMode(QCamera.CaptureStillImage)
+
+        # creating a QCameraImageCapture object
+        self.capture = QCameraImageCapture(self.camera)
+
+
+
+        # getting current camera name
+        self.current_camera_name = self.available_cameras[i].description()
+
+        # initial save sequence
+        self.save_seq = 0
 
 
     def displayTime(self, fecha):
@@ -41,6 +94,7 @@ class principal(QMainWindow):
 
 
     def IngresoNumeros(self, valor):
+        self.camera.start()
         self.increment = 0
         ingreso = self.ID.text()
         ingreso += valor
@@ -61,6 +115,7 @@ class principal(QMainWindow):
 
     def resumeOperation(self):
         if self.increment >= 100:
+            self.camera.stop()
             self.timer.stop()
             self.barra_progreso.setValue(0)
             self.ID.setText('')
