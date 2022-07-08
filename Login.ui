@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1066</width>
+    <width>1072</width>
     <height>867</height>
    </rect>
   </property>
@@ -202,20 +202,7 @@ font: family &quot;Times new Roman&quot;;</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>378</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="1">
+          <item row="0" column="3">
            <widget class="QFrame" name="frame_5">
             <property name="minimumSize">
              <size>
@@ -703,7 +690,20 @@ background-color: rgb(171, 171, 171);
             </widget>
            </widget>
           </item>
-          <item row="0" column="2">
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>378</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="4">
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -797,7 +797,7 @@ color: white;</string>
           <bool>true</bool>
          </property>
          <property name="autoFillBackground">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(0, 255, 255);</string>
@@ -837,6 +837,7 @@ color: white;</string>
  </widget>
  <resources>
   <include location="Assets/udgLogo.qrc"/>
+  <include location="Assets/huella.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -1,6 +1,7 @@
 # import pruebaDB as DB
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from PyQt5.QtGui import QPixmap
 import sys, urllib.request, json, time
 from PyQt5.QtCore import QTimer, QTime, QDate, QDateTime, Qt
 from PyQt5.QtMultimedia import *
@@ -33,31 +34,37 @@ class principal(QMainWindow):
         self.timer_reloj.start()
 
         self.available_cameras = QCameraInfo.availableCameras()
+        self.pixmap = QPixmap(r'C:\Users\Nacho Andrade\Documents\Nuevo SICA\SICA_2_pruebas\Assets\huella1.jpg')
+
+
 
 
         frame = QFrame(self)
         frame.setFrameShape(QFrame.Box)
         frame.setFrameShadow(QFrame.Sunken)
-        frame.setFixedWidth(305)
-        frame.setFixedHeight(180)
-        frame.move(10, 10)
+        frame.setFixedWidth(300)
+        frame.setFixedHeight(300)
+        frame.move(60, 110)
 
         self.paginaVisor = QVideoWidget()
-        self.paginaVisor.resize(300, 175)
+        self.paginaVisor.resize(300, 300)
 
         self.visor = QCameraViewfinder(self.paginaVisor)
-        self.visor.resize(300, 175)
-        #
-        # self.labelFoto = QLabel()
-        # self.labelFoto.setAlignment(Qt.AlignCenter)
-        # self.labelFoto.resize(300, 175)
+        self.visor.resize(300, 300)
+
+        self.labelFoto = QLabel(self)
+        self.labelFoto.setAlignment(Qt.AlignCenter)
+        self.labelFoto.resize(300, 300)
+        self.labelFoto.setPixmap(self.pixmap)
+        self.labelFoto.move(60, 110)
+        # self.labelFoto.resize(self.pixmap.width(),
+        #                   self.pixmap.height())
 
         # QStackedWidget
         self.stackedWidget = QStackedWidget(frame)
         self.stackedWidget.addWidget(self.paginaVisor)
-        # self.stackedWidget.addWidget(self.labelFoto)
-        self.stackedWidget.resize(300, 175)
-        self.stackedWidget.move(2, 2)
+        self.stackedWidget.resize(300, 300)
+        self.stackedWidget.move(0, 0)
         self.select_camera(0)
 
         index.show()
@@ -94,6 +101,7 @@ class principal(QMainWindow):
 
 
     def IngresoNumeros(self, valor):
+        self.labelFoto.setHidden(True)
         self.camera.start()
         self.increment = 0
         ingreso = self.ID.text()
@@ -102,7 +110,7 @@ class principal(QMainWindow):
         self.pauseResume()
 
     def borrar_ID(self):
-        self.increment = 0
+        # self.increment = 0
         id = self.ID.text()
         newId = id[:-1]
         self.ID.setText(newId)
@@ -111,11 +119,12 @@ class principal(QMainWindow):
         self.mensaje.setText("ESPERANDO CÓDIGO")
         self.ID.setStyleSheet("QLineEdit {border: None; font: 18pt; border-radius: 5px;}")
         tam = len(id)
-        self.pauseResume()
+        # self.pauseResume()
 
     def resumeOperation(self):
         if self.increment >= 100:
             self.camera.stop()
+            self.labelFoto.setHidden(False)
             self.timer.stop()
             self.barra_progreso.setValue(0)
             self.ID.setText('')
